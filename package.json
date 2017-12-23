@@ -1,9 +1,8 @@
 {
   "name": "bizcap-simulador",
   "version": "1.0.0",
-  "description": "Simulador",
-  "author": "deboranobre",
-  "homepage": "https://github.com/deboranobre/bizcap-simulador",
+  "description": "Bizcap Simulador",
+  "author": "deboranobre <deborarbnobre@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -12,12 +11,10 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
-    "build": "node build/build.js",
-    "deploy": "node ./node_modules/vue-gh-pages/index.js"
+    "build": "node build/build.js"
   },
   "dependencies": {
     "vue": "^2.5.2",
-    "vue-gh-pages": "^1.7.0",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 # bizcap-simulador
 
-> Simulador
+> Bizcap Simulador
 
 ## Build Setup
 
