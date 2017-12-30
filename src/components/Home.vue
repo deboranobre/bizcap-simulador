@@ -5,19 +5,26 @@
 
         <form v-if="showLoanForm" v-on:submit.prevent="onSubmitLoan">
             <b-container fluid>
-                <b-row class="my-3">
+                <b-row class="mt-3">
                     <label for="loanValue">Valor do Empréstimo</label>
                     <money v-model="loanValue" v-bind="money" class="form-control"></money>
                     <small class="form-text text-muted">Valor máximo de R$100.000,00</small>
                 </b-row>
 
-                <b-row>
+                <b-row class="mt-3">
                     <label for="installmentsNumber">Número de Parcelas</label>
-                    <b-form-input v-model="installmentsNumber" type="number" min="3" max="12" v-on:change="onInstallmentsNumberChange()"></b-form-input>
                 </b-row>
 
-                <b-row v-if="showInfo"> 
-                    <small class="form-t;~´=ext text-muted">Valor da parcela: R$ {{ installmentsValue }} com juros de {{ interest }} a.m.</small>
+                <b-row>
+                    <vue-slider v-model="installmentsNumber" width="100%" :min='3' :max='12' ></vue-slider>
+                </b-row>
+
+                <b-row class="mt-3"> 
+                    <p class="text-info m-0"><strong>Taxa de Juros</strong> de 3% a.m. a 8% a.m.*</p>
+                </b-row>
+
+                <b-row class="mt-1"> 
+                    <p class="text-info m-0">De R$ {{ installmentMin }} a R$ {{ installmentMax }}</p>
                 </b-row>
 
                 <b-row class="mt-3">
@@ -49,20 +56,27 @@
 <script>
 import {Money} from 'v-money'
 import {TheMask} from 'vue-the-mask'
+import vueSlider from 'vue-slider-component'
 import axios from 'axios'
 
 export default {
   name: 'Home',
-  components: {Money, TheMask},
+  components: {
+    Money,
+    TheMask,
+    vueSlider
+  },
   data () {
     return {
       showSuccessBox: false,
       showWarningBox: false,
       showLoanForm: true,
       showEmailForm: false,
-      loanValue: 0,
-      installmentsNumber: 3,
+      loanValue: 5000,
+      installmentsNumber: 12,
       installmentsValue: 0,
+      installmentMin: 502.31,
+      installmentMax: 663.48,
       interest: 0,
       showInfo: false,
       cnpj: '',
@@ -77,51 +91,9 @@ export default {
     }
   },
   methods: {
-    onInstallmentsNumberChange: function () {
-      axios({ method: 'GET', 'url': 'https://httpbin.org/get' }).then(result => {
-        this.setInstallmentValue(this.loanValue, parseInt(this.installmentsNumber))
-      }, error => {
-        console.error(error)
-      })
-    },
-    setInstallmentValue: function (loanValue, installmentsNumber) {
-      switch (installmentsNumber) {
-        case 3:
-          this.interest = 3
-          break
-        case 4:
-          this.interest = 4
-          break
-        case 5:
-          this.interest = 4.5
-          break
-        case 6:
-          this.interest = 5
-          break
-        case 7:
-          this.interest = 5.5
-          break
-        case 8:
-          this.interest = 6
-          break
-        case 9:
-          this.interest = 6.5
-          break
-        case 10:
-          this.interest = 7
-          break
-        case 11:
-          this.interest = 7.5
-          break
-        case 12:
-          this.interest = 8
-          break
-      }
-
-      let interestValue = (this.loanValue / this.installmentsNumber) * (this.interest / 100)
-      this.installmentsValue = ((this.loanValue / this.installmentsNumber) + interestValue).toFixed(2)
-
-      this.showInfo = true
+    setinstallmentsValue: function () {
+      this.installmentMin = (this.loanValue * ((Math.pow((1 + 0.03), this.installmentsNumber) * 0.03) / (Math.pow((1 + 0.03), this.installmentsNumber) - 1))).toFixed(2)
+      this.installmentMax = (this.loanValue * ((Math.pow((1 + 0.08), this.installmentsNumber) * 0.08) / (Math.pow((1 + 0.08), this.installmentsNumber) - 1))).toFixed(2)
     },
     onSubmitLoan: function () {
       axios({ method: 'POST', 'url': 'https://httpbin.org/post', 'data': {loanValue: this.loanValue, installmentsNumber: this.installmentsNumber} }).then(result => {
@@ -140,6 +112,17 @@ export default {
         this.showWarningBox = false
         console.log(error)
       })
+    }
+  },
+  watch: {
+    installmentsNumber: function () {
+      this.setinstallmentsValue()
+    },
+    loanValue: function (val, oldVal) {
+      if (val > 100000) {
+        this.loanValue = 5000
+      }
+      this.setinstallmentsValue()
     }
   }
 }
