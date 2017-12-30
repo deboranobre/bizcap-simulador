@@ -21,7 +21,7 @@
 
                 <b-row class="mt-3"> 
                     <p class="text-info m-0">A <strong>Taxa de Juros</strong> pode variar de 3% a.m. a 8% a.m.</p>
-                    <p class="text-info m-0">Com essas condições o seu empréstimo pode variar de <strong>R$ {{ installmentMin }}</strong> a <strong>R$ {{ installmentMax }}</strong></p>
+                    <p class="text-info m-0">Com essas condições o valor da sua parcela mensal pode variar de <strong>R$ {{ installmentMin }}</strong> a <strong>R$ {{ installmentMax }}</strong></p>
                 </b-row>
 
                 <b-row class="mt-3">
