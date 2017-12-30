@@ -15,7 +15,7 @@ export default {
 #app {
   margin: auto;
   padding: 70px 50px;
-  width: 430px;
+  width: 455px;
 }
 
 #app img{display: block; margin: auto}

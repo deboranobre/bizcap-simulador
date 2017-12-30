@@ -20,11 +20,8 @@
                 </b-row>
 
                 <b-row class="mt-3"> 
-                    <p class="text-info m-0"><strong>Taxa de Juros</strong> de 3% a.m. a 8% a.m.*</p>
-                </b-row>
-
-                <b-row class="mt-1"> 
-                    <p class="text-info m-0">De R$ {{ installmentMin }} a R$ {{ installmentMax }}</p>
+                    <p class="text-info m-0">A <strong>Taxa de Juros</strong> pode variar de 3% a.m. a 8% a.m.</p>
+                    <p class="text-info m-0">Com essas condições o seu empréstimo pode variar de <strong>R$ {{ installmentMin }}</strong> a <strong>R$ {{ installmentMax }}</strong></p>
                 </b-row>
 
                 <b-row class="mt-3">
@@ -37,12 +34,12 @@
             <b-container fluid>
                 <b-row class="my-3">
                     <label for="loanValue">CNPJ</label>
-                    <the-mask v-model="cnpj" :mask="['##.###.###/####-##']" placeholder="Ex: 27.865.757/0063-05" class="form-control"/>
+                    <the-mask v-model="cnpj" :mask="['##.###.###/####-##']" placeholder="Ex: 27.865.757/0063-05" class="form-control" required/>
                 </b-row>
 
                 <b-row>
                     <label for="email">E-mail</label>
-                    <b-form-input v-model="email" type="email" placeholder="bizcap@bizcap.com.br"></b-form-input>
+                    <b-form-input v-model="email" type="email" placeholder="bizcap@bizcap.com.br" required></b-form-input>
                 </b-row>
 
                 <b-row class="mt-3">
